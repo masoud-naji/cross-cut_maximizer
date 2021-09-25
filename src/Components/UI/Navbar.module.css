@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+.navbar {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
+.navbar h1 {
+  color: #f1356d;
+  text-transform: capitalize;
+}
+.navbar .links {
+  margin-left: auto;
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+  font-weight: 600;
+}
+.navbar a:hover {
+  color: #f1356d;
+  background-color: white;
+  cursor: pointer;
+}
+
+.cta {
+  color: white;
+  margin-left: 20px;
+  background-color: #f1356d;
+  border: 2px dotted #ffffff;
+  border-radius: 8px;
+  transition: color 250ms ease-in, background-color 250ms ease-in;
+}
+
+.cta:hover {
+  color: #f1356d;
+  background-color: white;
+  border: 2px dotted #f38eac;
+  cursor: pointer;
+}
+
+.fancy_link {
+  font-size: 1.6rem;
+  text-decoration: none;
+  text-transform: capitalize;
+  color: #f1356d;
+  position: relative;
+}
+
+.fancy_link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 250ms ease-in;
+}
+
+.fancy_link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.alertBar {
+  display: grid;
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-bottom: 1px solid #f2f2f2;
+}
