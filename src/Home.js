@@ -5,9 +5,10 @@ import SearchUserList from "./Components/User/SearchUserList";
 import classes from "./Components/User/AddUser.module.css";
 import useFetch from "./Components/CustomHooks/useFetch";
 import { useHistory } from "react-router";
-
-// import UserList from "./Components/User/UserList";
-// import UserData from "./Components/Post/MOCK_DATA.json";
+import Chart from "./Chart/Chart";
+import ShowWithAnimation from "./Components/CustomHooks/ShowWithDelay";
+import heroimage from "./Images/Business_SVG.svg";
+import SearchUserListEditable from "./Components/User/SearchUserListEditable";
 
 const Home = (props) => {
   const history = useHistory();
@@ -15,6 +16,17 @@ const Home = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const url = "http://localhost:8000/AllUsers";
   const { data: usersList, isPending, error } = useFetch(url);
+  const [isMounted, setIsMounted] = useState(false);
+
+  ///////////////////just for trigger the Props.isChanging from AddUser Component too on App Component///////////
+  const keyForRefetch = () => {
+    props.isChanging(status);
+  };
+
+  useEffect(() => {
+    setIsMounted(!isMounted);
+  }, [props.showNewUser]);
+
   const deleteHandler = (id) => {
     fetch(url + "/" + id, { method: "DELETE" })
       .then(async (response) => {
@@ -28,7 +40,7 @@ const Home = (props) => {
         }
 
         setStatus("Delete successful");
-        props.isChanging(status);
+        props.isChanging(status); /////////////just for tiger this prop on App Component
       })
       .catch((error) => {
         setErrorMessage(error);
@@ -38,7 +50,30 @@ const Home = (props) => {
 
   return (
     <div>
-      {props.showNewUser ? <AddUser /> : <h2></h2>}
+      {/* ////////////////////////change with Animation//////////////// */}
+
+      <div className={classes.flex_container}>
+        <div className={classes.flex_item_left}>
+          <img src={heroimage} alt="Cross-CUT MAXimizer Image" />
+        </div>
+        <div className={classes.flex_item_right}>
+          <Card className={`${classes.input} ${classes.hero}`}>
+            {/* <button onClick={() => setIsMounted(!isMounted)}>Show/Hide</button> */}
+            <ShowWithAnimation isMounted={!isMounted}>
+              {usersList && <Chart data={usersList} />}
+            </ShowWithAnimation>
+            <ShowWithAnimation isMounted={isMounted}>
+              <AddUser onClick={keyForRefetch} />
+            </ShowWithAnimation>
+          </Card>
+        </div>
+      </div>
+      {/* ////////////////////////change without Animation//////////////// */}
+      {/* {!props.showNewUser && usersList ? (
+        <Chart data={usersList} />
+      ) : (
+        <AddUser onClick={keyForRefetch} />
+      )} */}
 
       {error && (
         <Card className={classes.input}>
@@ -51,9 +86,15 @@ const Home = (props) => {
         </Card>
       )}
       {usersList && (
-        <SearchUserList Users={usersList} Ondelete={deleteHandler} />
+        <div>
+          {/* <SearchUserList Users={usersList} Ondelete={deleteHandler} /> */}
+          <SearchUserListEditable
+            Users={usersList}
+            Ondelete={deleteHandler}
+            onClick={keyForRefetch}
+          />
+        </div>
       )}
-      {/* {usersList && <UserList Users={usersList} Ondelete={deleteHandler} />} */}
     </div>
   );
 };
@@ -61,3 +102,4 @@ const Home = (props) => {
 export default Home;
 
 //npx json-server --watch Post/db.json --port 8000
+//npm install react-confirm-alert --save

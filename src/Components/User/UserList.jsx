@@ -17,7 +17,7 @@ function UserList(props) {
   return (
     <Card className={style.users}>
       <div>
-        <h3>Currently Table Contain {props.Users.length} Records</h3>
+       {PushSubscriptionOptions.users && <h3>Currently Table Contain {props.Users.length} Records</h3>} 
        
         <table className={style.userTable}>
           <thead>

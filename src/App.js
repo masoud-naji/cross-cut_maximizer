@@ -34,7 +34,7 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/">
-              <Home showNewUser={formshow} isChanging={isChangingCLick} />
+              {!userlistChange && <Home showNewUser={formshow} isChanging={isChangingCLick} />}
             </Route>
             <Route path="/Chart">
               <Chart />

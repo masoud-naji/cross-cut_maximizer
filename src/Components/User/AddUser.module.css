@@ -1,5 +1,5 @@
 .input {
-  margin: 2rem auto;
+  margin:  auto;
   padding: 1rem;
   width: 90%;
   max-width: 40rem;
@@ -23,4 +23,40 @@
 .input input:focus {
   outline: none;
   border-color: #4f005f;
+}
+
+.hero {
+  min-height: 30rem;
+  max-height: 30rem;
+  height: 30rem;
+  overflow: hidden;
+  /* margin: 5px; */
+}
+
+.flex_container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 60%;
+}
+
+.flex_container img {
+  margin: 5px;
+}
+.flex_item_left {
+  flex: 50%;
+}
+
+.flex_item_right {
+  flex: 50%;
+}
+
+/* Responsive layout - makes a one column layout (100%) instead of a two-column layout (50%) */
+@media (max-width: 800px) {
+  .flex-item-right,
+  .flex-item-left {
+    flex: 100%;
+  }
 }

@@ -58,7 +58,7 @@ function SearchUserList(props) {
           onChange={filter}
           placeholder="Search for names.."
         />
-        <table className={style.userTable}>
+         <table className={style.userTable}>
           <thead>
             <tr>
               <th>Avator</th>

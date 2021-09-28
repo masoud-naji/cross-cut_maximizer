@@ -7,8 +7,8 @@ const MyAvator = (
   const context = canvas.getContext("2d");
   // const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
 
-  canvas.width = 50;
-  canvas.height = 50;
+  canvas.width = 45;
+  canvas.height = 45;
 
   // Draw background
   context.fillStyle = backgroundColor;
