@@ -23,7 +23,7 @@ const EditableOnlyRow = ({
         },
         {
           label: "No",
-          onClick: () => console.log("no"),
+          onClick: () =>{ return },
         },
       ],
     });
@@ -39,7 +39,7 @@ const EditableOnlyRow = ({
         },
         {
           label: "No",
-          onClick: () => console.log("no"),
+          onClick: () => { return },
         },
       ],
     });

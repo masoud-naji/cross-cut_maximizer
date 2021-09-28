@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-// import UserData from "../Post/MOCK_DATA.json";
+import MyAvator from "../CustomHooks/MyAvator";
 import style from "./UsersList.module.css";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import { Fragment } from "react";
 import ReadOnlyRow from "./UserEdit/ReadOnlyRow";
 import EditableOnlyRow from "./UserEdit/EditableRow";
+import Pagination from "../UI/pagination";
+import Paginate from "../CustomHooks/Paginate";
 
 function SearchUserListEditable(props) {
   const [data, setData] = useState(null);
@@ -16,17 +18,19 @@ function SearchUserListEditable(props) {
   const [name, setName] = useState("");
   const [foundUsers, setFoundUsers] = useState(props.Users);
   const [rowEditing, setRowEditing] = useState(null);
-
+  const [pageSize, setPageSize] = useState(15);
+  const [currentPage, setCurrentPage] = useState(1);
+  const paginatedFilteredUsers = Paginate(foundUsers, currentPage, pageSize);
   const [editFormData, setEditFormData] = useState({
     first_name: "",
     last_name: "",
     time: "",
     email: "",
     Job: "",
-    DateOfBirthat: "",
+    DateOfBirth: "",
     donate: "",
   });
-
+  /////////////////////////////////////////////////Edit Rows////////////////////////////////////
   const editFormChangeHandler = (event) => {
     const filedName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
@@ -45,28 +49,32 @@ function SearchUserListEditable(props) {
       time: editFormData.time,
       email: editFormData.email,
       Job: editFormData.Job,
-      DateOfBirthat: editFormData.DateOfBirth,
+      DateOfBirth: editFormData.DateOfBirth,
       donate: editFormData.donate,
     };
     setEditFormData(formValues);
   };
 
-  const editFormSubmit = ( user) => {
-
+  const editFormSubmit = (user) => {
+    const Avator = MyAvator(
+      `${editFormData.first_name.charAt(0)}${editFormData.last_name.charAt(0)}`,
+      `${"#" + (((1 << 24) * Math.random()) | 0).toString(16)}`,
+      `${"#" + (((1 << 24) * Math.random()) | 0).toString(16)}`
+    );
     setIsPending(true);
 
     const editUser = {
+      Avator,
       id: rowEditing,
       first_name: editFormData.first_name,
       last_name: editFormData.last_name,
       time: editFormData.time,
       email: editFormData.email,
       Job: editFormData.Job,
-      DateOfBirthat: editFormData.DateOfBirth,
+      DateOfBirth: editFormData.DateOfBirth,
       donate: editFormData.donate,
     };
 
-    console.log(editUser);
     fetch(url + "/" + editUser.id, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -85,7 +93,8 @@ function SearchUserListEditable(props) {
       });
     console.log(`"eror is " ${error}`);
   };
-  // search by filter
+  /////////////////////////////////////////////// End of Edit Rows///////////////////////////////////////////////
+  //////////////////////////////////////////// search by filter//////////////////////////////////////////////////
   const filter = (event) => {
     const keyword = event.target.value;
 
@@ -102,12 +111,16 @@ function SearchUserListEditable(props) {
     setName(keyword);
   };
 
-  // toggle edit table
+  ///////////////////////////////////toggle edit table//////////////////////////////////////////////////////
   const enableEdit = () => {
     setIsediting(true);
   };
   const disableEdit = () => {
     setIsediting(false);
+  };
+  ////////////////////////////////////Pagination////////////////////////////////////////////////////////////
+  const PageChangeHandler = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -119,13 +132,23 @@ function SearchUserListEditable(props) {
             {/* <br /> Total Selected Debt is {getFormattedPrice(total)} */}
           </h3>
         )}
+        <div className={style.toptable}>
         <input
           type="search"
           value={name}
           id={style.myInput}
           onChange={filter}
-          placeholder="Search for names.."
+            placeholder="Search for names.."
+            className={style.toptable_left}
         />
+             <Pagination
+            itemsCount={foundUsers.length}
+            pageSize={pageSize}
+            onPageChange={PageChangeHandler}
+            currentPage={currentPage}
+            className={style.toptable_right}
+          />
+          </div>
         <form>
           <table className={style.userTable}>
             <thead>
@@ -149,7 +172,7 @@ function SearchUserListEditable(props) {
             </thead>
             <tbody>
               {foundUsers && foundUsers.length > 0 ? (
-                foundUsers.map((user) =>
+                paginatedFilteredUsers.map((user) =>
                   rowEditing === user.id ? (
                     <Fragment>
                       <EditableOnlyRow
@@ -175,9 +198,9 @@ function SearchUserListEditable(props) {
               ) : (
                 <h3>No results found!</h3>
               )}
-              ;
             </tbody>
           </table>
+     
         </form>
       </div>
     </Card>

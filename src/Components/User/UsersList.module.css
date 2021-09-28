@@ -9,7 +9,7 @@
   padding: 1rem;
 }
 
-.users li {
+.users li :not(page-item) {
   border: 1px solid #ccc;
   margin: 0.5rem 0;
   padding: 0.5rem;
@@ -71,7 +71,34 @@ div h3 {
   background-repeat: no-repeat; /* Do not repeat the icon image */
   width: 100%; /* Full-width */
   font-size: 16px; /* Increase font-size */
-  padding: 12px 20px 12px 40px; /* Add some padding */
+  padding: 12px 20px 7px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
   margin-bottom: 12px; /* Add some space below the input */
+  border-radius: 5px;
+  height: 2.7rem;
+  
+}
+
+.toptable {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+.toptable_left {
+  flex: 50%;
+}
+
+.toptable_right {
+  flex: 50%;
+}
+
+/* Responsive layout - makes a one column layout (100%) instead of a two-column layout (50%) */
+@media (max-width: 800px) {
+  .ftoptable-right,
+  .toptable-left {
+    flex: 100%;
+  }
 }

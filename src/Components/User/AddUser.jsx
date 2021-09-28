@@ -32,7 +32,7 @@ const AddUser = (props) => {
   const DonateChangeHandler = (event) => {
     setDonate(event.target.value);
   };
-
+/////////////////////////////////////////////////Add User ////////////////////////////////////
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -72,7 +72,7 @@ const AddUser = (props) => {
       // props.isAdded("added");
     });
   };
-
+/////////////////////////////////////////////////END of Add User////////////////////////////////////
   return (
     // <Card className={classes.input}>
     <form onSubmit={submitHandler}>

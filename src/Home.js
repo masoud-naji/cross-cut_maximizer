@@ -103,3 +103,5 @@ export default Home;
 
 //npx json-server --watch Post/db.json --port 8000
 //npm install react-confirm-alert --save
+//npm install bootstrap
+//npm i lodash

@@ -1,7 +1,6 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import Card from "../Components/UI/Card";
-import classes from "../Components/User/AddUser.module.css";
+
 
 function Chart({ data }) {
   const topTen = data
